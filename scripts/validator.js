@@ -36,6 +36,7 @@ function isValid(from ,to) {
             return isNotIntersect(from, to);
             break;
         case piecesMap.KING.symbol:
+                return (Math.abs(from.row - to.row) <= 1 && Math.abs(to.col - to.col) <= 1) &&isNotIntersect(from, to)
             break;
         default:
             return false;
