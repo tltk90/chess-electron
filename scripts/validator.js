@@ -1,5 +1,5 @@
 const { piecesMap } = require('./pieces');
-const {getCellColor, boardToObject} = require('./utils');
+const {getCellColor, boardToObject, isNotIntersect} = require('./utils');
 exports.__esModule = true;
 
 function isValid(from ,to) {
@@ -26,12 +26,14 @@ function isValid(from ,to) {
             return (Math.abs(from.row - to.row) === 2 && Math.abs(from.col - to.col) === 1) ||
                 (Math.abs(from.col - to.col) === 2 && Math.abs(from.row - to.row) === 1);
             break;
-        case piecesMap.BISHOP.symbol:
-
-            break;
         case piecesMap.ROCK.symbol:
+            return isNotIntersect(from, to) && ((from.row === to.row && from.col !== to.col) || (from.col === to.col && from.row !== to.row));
+            break;
+        case piecesMap.BISHOP.symbol:
+                return isNotIntersect(from, to) && Math.abs(from.row - to.row) === Math.abs(from.col - to.col)
             break;
         case piecesMap.QUEEN.symbol:
+            return isNotIntersect(from, to);
             break;
         case piecesMap.KING.symbol:
             break;
