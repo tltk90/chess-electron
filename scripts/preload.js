@@ -10,3 +10,8 @@ window.addEventListener('DOMContentLoaded', () => {
     link.media = 'all';
     head.appendChild(link);
 });
+
+process.once('loaded', () => {
+    global.requireValidator = require('./validator').default;
+    global.requireUtils = require('./utils');
+});
