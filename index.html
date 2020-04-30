@@ -5,14 +5,40 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
+    <title>Chess game</title>
 </head>
 <body>
-<h1>Hello World!</h1>
-We are using Node.js <span id="node-version"></span>,
-Chromium <span id="chrome-version"></span>,
-and Electron <span id="electron-version"></span>.
-
+<h1>Chess</h1>
+<h3>Player: <span id="player"></span></h3>
+<div id="board">
+    <div class="row">
+        <p class="empty"></p><p class="caption">A</p><p class="caption">B</p><p class="caption">C</p><p class="caption">D</p><p class="caption">E</p><p class="caption">F</p><p class="caption">G</p><p class="caption">H</p>
+    </div>
+    <div class="row">
+        <p class="caption">8</p><p class="cell black">♖</p><p class="cell black">♗</p><p class="cell black">♘</p><p class="cell black">♕</p><p class="cell black">♔</p><p class="cell black">♘</p><p class="cell black">♗</p><p class="cell black">♖</p>
+    </div>
+    <div class="row">
+        <p class="caption">7</p><p class="cell black">♙</p><p class="cell black">♙</p><p class="cell black">♙</p><p class="cell black">♙</p><p class="cell black">♙</p><p class="cell black">♙</p><p class="cell black">♙</p><p class="cell black">♙</p>
+    </div>
+    <div class="row">
+        <p class="caption">6</p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p>
+    </div>
+    <div class="row">
+        <p class="caption">5</p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p>
+    </div>
+    <div class="row">
+        <p class="caption">4</p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p>
+    </div>
+    <div class="row">
+        <p class="caption">3</p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p><p class="cell"></p>
+    </div>
+    <div class="row">
+        <p class="caption">2</p><p class="cell white">♙</p><p class="cell white">♙</p><p class="cell white">♙</p><p class="cell white">♙</p><p class="cell white">♙</p><p class="cell white">♙</p><p class="cell white">♙</p><p class="cell white">♙</p>
+    </div>
+    <div class="row">
+        <p class="caption">1</p><p class="cell white">♖</p><p class="cell white">♗</p><p class="cell white">♘</p><p class="cell white">♕</p><p class="cell white">♔</p><p class="cell white">♘</p><p class="cell white">♗</p><p class="cell white">♖</p>
+    </div>
+</div>
 <!-- You can also require other files to run in this process -->
 <script src="./scripts/renderer.js"></script>
 </body>
