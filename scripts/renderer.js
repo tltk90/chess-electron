@@ -1,3 +1,6 @@
+const {getCellColor} = requireUtils;
+
+const isValid = requireValidator;
 
 class BoardConfig {
     constructor() {
@@ -11,8 +14,7 @@ class BoardConfig {
         move(this.__player)
     }
     togglePlayer(){
-        const newPlayer = this.__player === 'white' ? 'black' : 'white';
-        this.__player = newPlayer;
+        this.__player = this.__player === 'white' ? 'black' : 'white';
         this.move();
         this.setPlayerTitle()
     }
@@ -95,11 +97,10 @@ function allowDrop(ev) {
 function changeCell(from, to) {
     const color = from.classList.contains('white') ? 'white' : 'black';
     const piece = from.innerHTML;
-    if (true) { // TODO: check if this move is valid.
-        disableDraggable(from);
-        enableDragable(to);
-        enableDropable(from);
-        disableDropable(to);
+    const fromCell = {row: Number(from.dataset.row), col: Number(from.dataset.col)};
+    const toCell = {row: Number(to.dataset.row), col: Number(to.dataset.col)};
+    if (isValid(fromCell, toCell)) { // TODO: check if this move is valid.
+        to.classList.remove(getCellColor(to));
         to.innerHTML = piece;
         from.innerHTML = '';
         to.classList.add(color);
