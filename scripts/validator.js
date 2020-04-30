@@ -22,16 +22,18 @@ function isValid(from ,to) {
                 toPiece.innerText === '' &&
                 (((from.row === 2 || from.row === 7) && to.row - from.row === 2 * moveFactor) || to.row - from.row === 1 * moveFactor);
             break;
-        case piecesMap.BISHOP:
+        case piecesMap.KNIGHT.symbol:
+            return (Math.abs(from.row - to.row) === 2 && Math.abs(from.col - to.col) === 1) ||
+                (Math.abs(from.col - to.col) === 2 && Math.abs(from.row - to.row) === 1);
+            break;
+        case piecesMap.BISHOP.symbol:
 
             break;
-        case piecesMap.KNIGHT:
+        case piecesMap.ROCK.symbol:
             break;
-        case piecesMap.ROCK:
+        case piecesMap.QUEEN.symbol:
             break;
-        case piecesMap.QUEEN:
-            break;
-        case piecesMap.KING:
+        case piecesMap.KING.symbol:
             break;
         default:
             return false;
