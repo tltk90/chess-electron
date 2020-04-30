@@ -12,7 +12,6 @@ body {
 h1, h3 {
     margin: 2px;
 }
-
 #board {
     display: flex;
     flex-direction: column;
@@ -33,16 +32,33 @@ h1, h3 {
     height: var(--cell-size);
     margin: 0;
     box-sizing: content-box;
-    border: 0.5px solid #a1a1a1;
-    background-color: #a1a1a1;
     user-select: none;
 }
 
 .cell , .caption {
     display: flex;
-    border: 0.5px solid #000000;
     align-items: center;
     justify-content: center;
     font-size: 20px;
     cursor: default;
+}
+
+.cell {
+    font-weight: 900;
+}
+
+.row:nth-child(even) > p.cell:nth-child(odd) {
+    background-color: #2b4d70;
+}
+
+.row:nth-child(even) > p.cell:nth-child(even) {
+    background-color: #adbdcd;
+}
+
+.row:nth-child(odd) > p.cell:nth-child(odd) {
+    background-color: #adbdcd;
+}
+
+.row:nth-child(odd) > p.cell:nth-child(even) {
+    background-color: #2b4d70;
 }
