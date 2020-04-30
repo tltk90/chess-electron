@@ -1,0 +1,26 @@
+{
+  "name": "chess-electron-new",
+  "version": "1.0.0",
+  "description": "Chess game for 2 players",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tltk90/chess-electron.git"
+  },
+  "keywords": [
+    "chess",
+    "2-players-game"
+  ],
+  "author": "Tzahi Levi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tltk90/chess-electron/issues"
+  },
+  "homepage": "https://github.com/tltk90/chess-electron#readme",
+  "devDependencies": {
+    "electron": "^8.2.4"
+  }
+}
