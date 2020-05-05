@@ -33,7 +33,7 @@ class BoardConfig {
 }
 
 const boardConfig = new BoardConfig();
-
+let errorTimeouts = [];
 function move(player) {
     const allPieces = document.getElementsByClassName('cell');
     const blackPieces = document.getElementsByClassName('black');
@@ -106,6 +106,22 @@ function changeCell(from, to) {
         to.classList.add(color);
         from.classList.remove(color);
         boardConfig.togglePlayer();
+    } else {
+        showError(from);
     }
 
 }
+
+function showError(cell) {
+    const addError = () => cell.classList.add('error');
+    const removeError = () => cell.classList.remove('error');
+    errorTimeouts.forEach( timeout => clearTimeout(timeout));
+    errorTimeouts.push(setTimeout(addError , 0));
+    errorTimeouts.push(setTimeout(removeError , 100));
+    errorTimeouts.push(setTimeout(addError , 150));
+    errorTimeouts.push(setTimeout(removeError , 250));
+    errorTimeouts.push(setTimeout(addError , 300));
+    errorTimeouts.push(setTimeout(removeError , 400));
+}
+
+

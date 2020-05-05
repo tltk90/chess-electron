@@ -62,3 +62,8 @@ h1, h3 {
 .row:nth-child(odd) > p.cell:nth-child(even) {
     background-color: #2b4d70;
 }
+
+
+.error {
+    background-color: #ff7477 !important;
+}
