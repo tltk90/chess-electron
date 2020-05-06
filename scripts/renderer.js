@@ -40,6 +40,7 @@ function move(player) {
     const whitePieces = document.getElementsByClassName('white');
     for (let item of allPieces) {
         disableDraggable(item);
+        disableDropable(item);
     }
 
     if (player === 'white') {
