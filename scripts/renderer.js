@@ -102,6 +102,9 @@ function changeCell(from, to) {
     const piece = from.innerHTML;
     const fromCell = getDataFromCell(from);
     const toCell = getDataFromCell(to);
+    if( _.isEqual(fromCell, toCell)) {
+        return false;
+    }
     if (isValid(fromCell, toCell)) { // TODO: check if this move is valid.
         if(to.classList.contains(ENPASSANTABLE_CLASS)){
             const enemyPiece = getCell(fromCell.row, toCell.col);
