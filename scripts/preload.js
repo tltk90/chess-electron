@@ -14,4 +14,5 @@ window.addEventListener('DOMContentLoaded', () => {
 process.once('loaded', () => {
     global.requireValidator = require('./validator').default;
     global.requireUtils = require('./utils');
+    global.requirePieces = require('./pieces');
 });

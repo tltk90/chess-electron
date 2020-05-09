@@ -1,5 +1,5 @@
 const { piecesMap } = require('./pieces');
-const {getCellColor, boardToObject, isNotIntersect} = require('./utils');
+const {getCellColor, boardToObject, isNotIntersect, ENPASSANTABLE_CLASS} = require('./utils');
 exports.__esModule = true;
 
 function isValid(from ,to) {
@@ -16,7 +16,7 @@ function isValid(from ,to) {
             const moveFactor = fromColor === 'black' ? -1 : 1;
             if(from.row === to.row) return false;
             if(Math.abs(from.col - to.col) === 1) {
-                return toPiece.innerText !== '';
+                return toPiece.innerText !== '' || toPiece.classList.contains(ENPASSANTABLE_CLASS);
             }
             return from.col === to.col &&
                 toPiece.innerText === '' &&

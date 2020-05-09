@@ -1,5 +1,5 @@
-const {getCellColor} = requireUtils;
-
+const {getCellColor, boardToObject, ENPASSANTABLE_CLASS, getCell } = requireUtils;
+const { piecesMap } = requirePieces;
 const isValid = requireValidator;
 
 class BoardConfig {
@@ -82,7 +82,9 @@ function drop(event) {
     event.preventDefault();
     const fromCell = boardConfig.getDragableItem();
     const toCell = event.target;
-    changeCell(fromCell, toCell);
+    if(changeCell(fromCell, toCell)) {
+        checkForEnpassant(fromCell, toCell);
+    }
     boardConfig.setDragableItem();
 }
 
@@ -98,19 +100,42 @@ function allowDrop(ev) {
 function changeCell(from, to) {
     const color = from.classList.contains('white') ? 'white' : 'black';
     const piece = from.innerHTML;
-    const fromCell = {row: Number(from.dataset.row), col: Number(from.dataset.col)};
-    const toCell = {row: Number(to.dataset.row), col: Number(to.dataset.col)};
+    const fromCell = getDataFromCell(from);
+    const toCell = getDataFromCell(to);
     if (isValid(fromCell, toCell)) { // TODO: check if this move is valid.
+        if(to.classList.contains(ENPASSANTABLE_CLASS)){
+            const enemyPiece = getCell(fromCell.row, toCell.col);
+            enemyPiece.innerHTML = '';
+            enemyPiece.classList.remove(getCellColor(enemyPiece));
+        }
         to.classList.remove(getCellColor(to));
         to.innerHTML = piece;
         from.innerHTML = '';
         to.classList.add(color);
         from.classList.remove(color);
         boardConfig.togglePlayer();
+        return true;
     } else {
         showError(from);
     }
 
+}
+
+function checkForEnpassant(from, to) {
+    const board = boardToObject();
+    clearAllEnpassant();
+    const fromCell = getDataFromCell(from);
+    const toCell = getDataFromCell(to);
+    const piece = to.innerHTML;
+    if( piece === piecesMap.PAWN.symbol && ((fromCell.row === 2 && toCell.row === 4) || (fromCell.row === 7 && toCell.row === 5)) ) {
+        const enpassantRow = (fromCell.row + toCell.row) / 2;
+        board[enpassantRow][fromCell.col].classList.add(ENPASSANTABLE_CLASS);
+    }
+
+    function clearAllEnpassant() {
+        board["3"].forEach( cell => cell.classList.remove(ENPASSANTABLE_CLASS));
+        board["6"].forEach( cell => cell.classList.remove(ENPASSANTABLE_CLASS));
+    }
 }
 
 function showError(cell) {
@@ -123,6 +148,10 @@ function showError(cell) {
     errorTimeouts.push(setTimeout(removeError , 250));
     errorTimeouts.push(setTimeout(addError , 300));
     errorTimeouts.push(setTimeout(removeError , 400));
+}
+
+function getDataFromCell(cell) {
+    return {row: Number(cell.dataset.row), col: Number(cell.dataset.col)}
 }
 
 

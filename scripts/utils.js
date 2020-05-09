@@ -1,5 +1,5 @@
 exports.__esModule = true;
-
+const ENPASSANTABLE_CLASS = 'enpassantable';
 function getCellColor(item) {
     const classes = item.classList.values();
     let itemClass = classes.next();
@@ -15,7 +15,7 @@ function getCellColor(item) {
 
 function boardToObject() {
     const board = document.getElementsByClassName('cell');
-    const boardObj = {1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {}, 7: {}, 8: {}};
+    const boardObj = {1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []};
     for(let cell of board) {
         boardObj[cell.dataset.row][cell.dataset.col] = cell;
     }
@@ -54,6 +54,15 @@ function isNotIntersect(from ,to) {
     return true;
 }
 
+function getCell(row, cell) {
+    return boardToObject()[row][cell];
+}
+
+/* functions */
 exports.getCellColor = getCellColor;
 exports.boardToObject = boardToObject;
 exports.isNotIntersect = isNotIntersect;
+exports.getCell = getCell;
+
+/* const */
+exports.ENPASSANTABLE_CLASS = ENPASSANTABLE_CLASS;
