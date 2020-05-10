@@ -1,4 +1,4 @@
-const {getCellColor, boardToObject, ENPASSANTABLE_CLASS, getCell } = requireUtils;
+const {getCellColor, boardToObject, ENPASSANTABLE_CLASS,getPieceSpan, getCell } = requireUtils;
 const { piecesMap } = requirePieces;
 const isValid = requireValidator;
 
@@ -6,6 +6,7 @@ class BoardConfig {
     constructor() {
         this.__player = 'white';
         this.dragableItem = undefined;
+        buildNewBoard();
         this.move();
         this.setPlayerTitle()
     }
@@ -81,7 +82,7 @@ function disableDropable(item) {
 function drop(event) {
     event.preventDefault();
     const fromCell = boardConfig.getDragableItem();
-    const toCell = event.target;
+    const toCell = event.target.classList.contains('cell') ? event.target : event.target.parentElement;
     if(changeCell(fromCell, toCell)) {
         checkForEnpassant(fromCell, toCell);
     }
@@ -99,7 +100,7 @@ function allowDrop(ev) {
 
 function changeCell(from, to) {
     const color = from.classList.contains('white') ? 'white' : 'black';
-    const piece = from.innerHTML;
+    const fromSpan = getPieceSpan(from);
     const fromCell = getDataFromCell(from);
     const toCell = getDataFromCell(to);
     if( _.isEqual(fromCell, toCell)) {
@@ -108,12 +109,13 @@ function changeCell(from, to) {
     if (isValid(fromCell, toCell)) { // TODO: check if this move is valid.
         if(to.classList.contains(ENPASSANTABLE_CLASS)){
             const enemyPiece = getCell(fromCell.row, toCell.col);
-            enemyPiece.innerHTML = '';
+            const pieceSpan = getPieceSpan(enemyPiece);
+            pieceSpan.innerText = '';
             enemyPiece.classList.remove(getCellColor(enemyPiece));
         }
         to.classList.remove(getCellColor(to));
-        to.innerHTML = piece;
-        from.innerHTML = '';
+        getPieceSpan(to).innerText = fromSpan.innerText;
+        fromSpan.innerText = '';
         to.classList.add(color);
         from.classList.remove(color);
         boardConfig.togglePlayer();
@@ -129,8 +131,8 @@ function checkForEnpassant(from, to) {
     clearAllEnpassant();
     const fromCell = getDataFromCell(from);
     const toCell = getDataFromCell(to);
-    const piece = to.innerHTML;
-    if( piece === piecesMap.PAWN.symbol && ((fromCell.row === 2 && toCell.row === 4) || (fromCell.row === 7 && toCell.row === 5)) ) {
+    const piece = getPieceSpan(to);
+    if( piece.innerText === piecesMap.PAWN.symbol && ((fromCell.row === 2 && toCell.row === 4) || (fromCell.row === 7 && toCell.row === 5)) ) {
         const enpassantRow = (fromCell.row + toCell.row) / 2;
         board[enpassantRow][fromCell.col].classList.add(ENPASSANTABLE_CLASS);
     }

@@ -29,7 +29,7 @@ function isNotIntersect(from ,to) {
         const factor = from.col < to.col ? 1 : -1;
         let col = from.col + factor;
         while(col !== to.col) {
-            if(board[row][col].innerText !== '') return false;
+            if(getPieceSpan(getCell(row, col)).innerText !== '') return false;
             col += factor;
         }
     }else if(from.col === to.col) {
@@ -37,7 +37,7 @@ function isNotIntersect(from ,to) {
         const factor = from.row < to.row ? 1 : -1;
         let row = from.row + factor;
         while(row !== to.row) {
-            if(board[row][col].innerText !== '') return false;
+            if(getPieceSpan(getCell(row,col)).innerText !== '') return false;
             row += factor
         }
     }else {
@@ -46,7 +46,7 @@ function isNotIntersect(from ,to) {
         let row = from.row + rowFactor;
         let col = from.col + colFactor;
         while( row !== to.row && col !== to.col) {
-            if( board[row][col].innerText !== '') return false;
+            if( getPieceSpan(getCell(row, col)).innerText !== '') return false;
             row += rowFactor;
             col += rowFactor;
         }
@@ -58,11 +58,15 @@ function getCell(row, cell) {
     return boardToObject()[row][cell];
 }
 
+function getPieceSpan(cell) {
+    return cell.getElementsByClassName('piece')[0];
+}
+
 /* functions */
 exports.getCellColor = getCellColor;
 exports.boardToObject = boardToObject;
 exports.isNotIntersect = isNotIntersect;
 exports.getCell = getCell;
-
+exports.getPieceSpan = getPieceSpan;
 /* const */
 exports.ENPASSANTABLE_CLASS = ENPASSANTABLE_CLASS;

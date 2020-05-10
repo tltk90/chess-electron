@@ -1,5 +1,5 @@
 const { piecesMap } = require('./pieces');
-const {getCellColor, boardToObject, isNotIntersect, ENPASSANTABLE_CLASS} = require('./utils');
+const {getCellColor, boardToObject, isNotIntersect, getPieceSpan, ENPASSANTABLE_CLASS} = require('./utils');
 exports.__esModule = true;
 
 function isValid(from ,to) {
@@ -11,7 +11,8 @@ function isValid(from ,to) {
     if(toColor && fromColor === toColor) {
         return false;
     }
-    switch(fromPiece.innerText) {
+    const piece = getPieceSpan(fromPiece);
+    switch(piece.innerText) {
         case piecesMap.PAWN.symbol:
             const moveFactor = fromColor === 'black' ? -1 : 1;
             if(from.row === to.row) return false;
