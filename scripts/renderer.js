@@ -5,6 +5,7 @@ const isValid = requireValidator;
 class BoardConfig {
     constructor() {
         this.__player = 'white';
+        this.kingLocation = {white: {row: 1, col: 5}, black: {row: 8, to: 5}};
         this.dragableItem = undefined;
         buildNewBoard();
         this.move();
@@ -26,6 +27,10 @@ class BoardConfig {
 
     getDragableItem() {
         return this.dragableItem;
+    }
+
+    changeKingLocation(row, col) {
+        this.kingLocation[this.__player] = {row: row, col: col};
     }
 
     setPlayerTitle() {
@@ -79,12 +84,21 @@ function disableDropable(item) {
     item.ondrop = undefined;
 }
 
+function checkKingMove(cell) {
+    if(getPieceSpan(cell).innerText === piecesMap.KING.symbol) {
+        const cellData = getDataFromCell(cell);
+        boardConfig.changeKingLocation(cellData.row, cellData.col);
+    }
+}
+
 function drop(event) {
     event.preventDefault();
     const fromCell = boardConfig.getDragableItem();
     const toCell = event.target.classList.contains('cell') ? event.target : event.target.parentElement;
     if(changeCell(fromCell, toCell)) {
         checkForEnpassant(fromCell, toCell);
+        checkKingMove(toCell);
+        boardConfig.togglePlayer();
     }
     boardConfig.setDragableItem();
 }
@@ -118,7 +132,6 @@ function changeCell(from, to) {
         fromSpan.innerText = '';
         to.classList.add(color);
         from.classList.remove(color);
-        boardConfig.togglePlayer();
         return true;
     } else {
         showError(from);
